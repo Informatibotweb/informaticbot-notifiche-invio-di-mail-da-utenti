@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invia la tua Email</title>
+  <style>
+    /* style.css */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #272d5f;
+      color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    input[type="email"], textarea {
+      width: 80%;
+      padding: 12px;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    textarea {
+      height: 100px;
+      resize: none;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      background-color: #ff6f61;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff4e3a;
+    }
+
+    #responseMessage {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: green;
+    }
+
+    input:focus, textarea:focus {
+      border: 2px solid #ff6f61;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Invia la tua Email a Informaticbot</h1>
+    <p>Inserisci la tua email per ricevere aggiornamenti:</p>
+    
+    <form id="emailForm">
+      <input type="email" id="email" placeholder="Inserisci la tua email" required>
+      <textarea id="message" placeholder="Descrivi la tua richiesta o messaggio" required></textarea>
+      <button type="submit">Invia</button>
+    </form>
+    
+    <div id="responseMessage"></div>
+  </div>
+
+  <script>
+    // script.js
+    const emailForm = document.getElementById('emailForm');
+    const emailInput = document.getElementById('email');
+    const messageInput = document.getElementById('message');
+    const responseMessage = document.getElementById('responseMessage');
+
+    // La tua email aziendale fissa
+    const myEmail = 'informaticbot3313@gmail.com';
+
+    // Funzione per inviare l'email tramite mailto
+    function sendEmail(userEmail, message) {
+      const subject = 'Nuova email da aggiungere da parte di un utente!';
+      const body = `Email: ${userEmail}\n\nMessaggio: ${message}`;
+
+      // Crea il link mailto con il destinatario (la tua email)
+      const mailtoLink = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // Reindirizza l'utente al link mailto per inviare l'email
+      window.location.href = mailtoLink;
+    }
+
+    // Gestore del form per raccogliere l'email e il messaggio
+    emailForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      
+      const userEmail = emailInput.value;
+      const message = messageInput.value;
+      
+      if (userEmail && message) {
+        // Mostra il messaggio di successo
+        responseMessage.innerText = `Grazie, la tua richiesta è stata inviata con successo!`;
+
+        // Invia l'email tramite mailto
+        sendEmail(userEmail, message);
+        
+        // Resetta i campi email e messaggio
+        emailInput.value = '';
+        messageInput.value = '';
+      } else {
+        responseMessage.innerText = 'Per favore, inserisci tutti i campi richiesti.';
+      }
+    });
+  </script>
+
+</body>
+</html>
